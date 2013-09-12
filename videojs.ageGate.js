@@ -29,7 +29,6 @@
   ageGate = function(options) {
     var player = this,
         settings = extend({}, defaults, options || {}),
-        okToPlay = false,
         minDate = settings['minDate'],
         promptMessage = settings['promptMessage'],
         deniedMessage = settings['deniedMessage'],
@@ -150,21 +149,21 @@
 
     player.on('play', function() {
       if ((typeof minDate === 'undefined') || (minDate == null)) {
-        okToPlay = true;
+        return;
       }
-      if (typeof window.localStorage !== 'undefined') {
+
+      if ((givenDate === null) && (typeof window.localStorage !== 'undefined')) {
         var d = JSON.parse(localStorage.getItem('givenDate'));
         if (d !== null)
           givenDate = new Date(d);
       }
-      if ((givenDate !== null) && (!isNaN(givenDate.getTime()))) {
-        okToPlay = givenDate <= minDate;
+
+      if ((givenDate !== null) && (!isNaN(givenDate.getTime())) && (givenDate <= minDate)) {
+        return;
       }
 
-      if (!okToPlay) {
-        player.pause();
-        ageGate.drawGate();
-      }
+      player.pause();
+      ageGate.drawGate();
 
     });
   }
