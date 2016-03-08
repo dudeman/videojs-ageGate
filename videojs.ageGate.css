@@ -1,5 +1,6 @@
 #vjs-age-gate {
   position: absolute;
+  top: 0;
   z-index: 999999;
   width: 100%;
   height: 100%;
@@ -27,6 +28,7 @@
 
 #vjs-age-gate-fail-verification {
   position: absolute;
+  top: 0;
   z-index: 999999;
   width: 100%;
   height: 100%;

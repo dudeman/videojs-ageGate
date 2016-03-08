@@ -5,21 +5,9 @@
  * https://github.com/funnyordie/videojs-ageGate/blob/master/LICENSE
  */
 
-(function(vjs) {
-  var
-  extend = function(obj) {
-    var arg, i, k;
-    for (i = 1; i < arguments.length; i++) {
-      arg = arguments[i];
-      for (k in arg) {
-        if (arg.hasOwnProperty(k)) {
-          obj[k] = arg[k];
-        }
-      }
-    }
-    return obj;
-  },
-  defaults = {
+(function(window, videojs) {
+  'use strict';
+  var defaults = {
     minDate: null,
     promptMessage: 'Please enter your birth date',
     deniedMessage: 'Sorry, you must be older to view this video'
@@ -28,7 +16,7 @@
 
   ageGate = function(options) {
     var player = this,
-        settings = extend({}, defaults, options || {}),
+        settings = videojs.mergeOptions(defaults, options),
         minDate = settings['minDate'],
         promptMessage = settings['promptMessage'],
         deniedMessage = settings['deniedMessage'],
@@ -168,6 +156,5 @@
     });
   }
 
-  vjs.plugin('ageGate', ageGate);
-
-}(window.videojs));
+  videojs.plugin('ageGate', ageGate);
+}(window, window.videojs));
