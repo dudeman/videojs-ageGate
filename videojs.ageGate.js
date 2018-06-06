@@ -117,13 +117,7 @@
           localStorage.setItem('givenDate', JSON.stringify(givenDate));
         }
       },
-      verifyDate: function() {
-        player.el().removeChild(document.getElementById('vjs-age-gate'));
-        if (givenDate <= minDate) {
-          player.play();
-          return
-        }
-
+	  showDeniedMessage: function() {
         var denied = document.createElement('div');
         denied.id = 'vjs-age-gate-fail-verification';
 
@@ -132,6 +126,15 @@
 
         denied.appendChild(title);
         player.el().appendChild(denied);
+      },
+      verifyDate: function() {
+        player.el().removeChild(document.getElementById('vjs-age-gate'));
+        if (givenDate <= minDate) {
+          player.play();
+          return
+        }
+
+        ageGate.showDeniedMessage();
       }
     }
 
@@ -147,6 +150,12 @@
       }
 
       if ((givenDate !== null) && (!isNaN(givenDate.getTime())) && (givenDate <= minDate)) {
+        return;
+      }
+
+      if ((givenDate !== null) && (!isNaN(givenDate.getTime())) && (givenDate > minDate)) {
+        player.pause();
+        ageGate.showDeniedMessage();
         return;
       }
 
