@@ -23,6 +23,3 @@ presents an age gate that users must pass before videos are playable.
 
 </script>
 ```
-
-## TODO:
-After failing the age gate, users can get another crack at it by simply reloading that page. That works for our needs, but the plugin should probably be configurable to make retrys harder?
